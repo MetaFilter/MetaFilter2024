@@ -63,6 +63,8 @@ enum RouteNameEnum: string
 
     case FavoritesIndex = 'favorites.index';
 
+    case IdeasIndex = 'ideas.index';
+
     case MetaFilterFundingIndex = 'metafilter.funding.index';
 
     case IrlPostIndex = 'irl.post.index';
