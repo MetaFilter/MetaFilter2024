@@ -7,6 +7,7 @@ use App\Http\Controllers\ArchivesController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\FundingController;
+use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PopularPostController;
@@ -48,6 +49,12 @@ Route::get('contact', [ContactMessageController::class, 'create'])
 
 Route::get('funding', [FundingController::class, 'index'])
     ->name(RouteNameEnum::MetaFilterFundingIndex);
+
+Route::get('ideas', [IdeaController::class, 'index'])
+    ->name(RouteNameEnum::IdeasIndex);
+
+Route::get('ideas/{idea}', [IdeaController::class, 'show'])
+    ->name(RouteNameEnum::IdeasIndex);
 
 Route::get('mail', [MailController::class, 'index'])
     ->name(RouteNameEnum::MailIndex);
