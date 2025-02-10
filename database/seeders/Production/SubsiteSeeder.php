@@ -18,7 +18,7 @@ final class SubsiteSeeder extends Seeder
     {
         $subsites = config('metafilter.seeders.subsites');
 
-        foreach ($subsites as $subsite) {
+        foreach ($subsites as $key => $subsite) {
             Subsite::firstOrCreate([
                 'name' => $subsite['name'],
                 'nickname' => $subsite['nickname'] ?? null,
@@ -26,6 +26,7 @@ final class SubsiteSeeder extends Seeder
                 'white_text' => $subsite['white_text'] ?? null,
                 'green_text' => $subsite['green_text'] ?? null,
                 'tagline' => $subsite['tagline'] ?? null,
+                'slug' => $key,
                 'subdomain' => $subsite['subdomain'],
                 'route' => $subsite['route'],
                 'view' => $subsite['view'],

@@ -42,7 +42,19 @@ final class AppServiceProvider extends ServiceProvider
         ]);
 
         $subdomain = $this->getSubdomain();
-        $subsite = $this->getSubsiteBySubdomain($subdomain);
+        
+        // Skip subsite lookup during database migration in case we're setting up the
+        // schema and the subsites table does not exist yet.
+        if ($this->app->runningInConsole() && 
+            in_array(
+                $_SERVER['argv'][1] ?? null,
+                ['migrate', 'migrate:fresh', 'migrate:refresh', 'migrate:reset', 'migrate:rollback']
+            )
+        ) {
+            $subsite = null;
+        } else {
+            $subsite = $this->getSubsiteBySubdomain($subdomain);
+        }
 
         session([
             'subsite' => $subsite,
