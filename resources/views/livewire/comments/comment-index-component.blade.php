@@ -6,6 +6,7 @@
     @forelse ($comments as $comment)
         <livewire:comments.comment-show-component
             wire:key="{{ $comment->id }}"
+            :authorized-user-id="$authorizedUserId"
             :comment="$comment"
         />
     @empty

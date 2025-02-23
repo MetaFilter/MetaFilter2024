@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\Comments;
 
 use App\Enums\LivewireEventEnum;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Repositories\CommentRepositoryInterface;
 use App\Traits\AuthStatusTrait;
@@ -20,6 +21,8 @@ final class CommentIndexComponent extends Component
     use SubsiteTrait;
 
     public ?int $authorizedUserId;
+    public bool $hasMoreComments = false;
+    public Comment $comment;
     public Post $post;
     public Collection $comments;
     public string $recordsText = 'comments';
@@ -48,14 +51,34 @@ final class CommentIndexComponent extends Component
         ]);
     }
 
-    #[On([
-        LivewireEventEnum::CommentStored->value,
-        LivewireEventEnum::CommentDeleted->value,
-        LivewireEventEnum::CommentUpdated->value,
-    ])]
+    #[On(LivewireEventEnum::CommentStored->value)]
     public function getComments(): void
     {
         $this->comments = $this->commentRepository->getCommentsByPostId($this->post->id);
+    }
+
+    //    #[On('comment-deleted.{comment.id}')]
+    public function deleteComment(int $commentId): void
+    {
+        $this->comments = $this->comments->reject(function ($comment) use ($commentId) {
+            return $comment['id'] === $commentId;
+        });
+
+        $this->commentRepository->delete($commentId);
+    }
+
+    //    #[On('comment-updated.{data}')]
+    public function updateComment(array $data): void
+    {
+        $this->comments = array_map(function ($comment) use ($data) {
+
+            if ($comment['id'] == $data['id']) {
+                $comment['text'] = $data['text'];
+            }
+
+            return $comment;
+
+        }, $this->comments);
     }
 
     private function setRecordsText(): void

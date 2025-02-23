@@ -6,15 +6,12 @@ namespace App\Livewire\Comments;
 
 use App\Enums\LivewireEventEnum;
 use App\Models\Comment;
-use App\Traits\AuthStatusTrait;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
 final class CommentShowComponent extends Component
 {
-    use AuthStatusTrait;
-
     public Comment $comment;
     public ?int $authorizedUserId;
     public int $favoriteCount = 0;
@@ -29,9 +26,9 @@ final class CommentShowComponent extends Component
     public bool $userFavorited = false;
     public bool $userFlagged = false;
 
-    public function mount(Comment $comment): void
+    public function mount(Comment $comment, ?int $authorizedUserId): void
     {
-        $this->authorizedUserId = $this->getAuthorizedUserId();
+        $this->authorizedUserId = $authorizedUserId;
         $this->comment = $comment;
     }
 
