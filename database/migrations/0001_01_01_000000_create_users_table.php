@@ -13,7 +13,9 @@ return new class extends Migration {
             $table->id();
 
             // MetaFilter-specific fields
-            $table->string('username')->nullable()->unique();
+            $table->string('username')->unique();
+            $table->string('salt')->unique();
+            $table->string('hashed_password')->unique();
 
             // Default Laravel fields
             $table->string('name')->nullable();
@@ -25,8 +27,19 @@ return new class extends Migration {
             // MetaFilter-specific fields
             $table->string('homepage_url')->nullable();
             $table->boolean('agrees_to_terms')->nullable();
+            $table->boolean('is_admin')->nullable();
+            $table->boolean('show_email')->nullable();
+            $table->boolean('use_mefi_mail')->nullable();
             $table->integer('legacy_id')->nullable()->unique();
             $table->longText('blurb')->nullable();
+            $table->longText('blurb_max')->nullable();
+            $table->string('ip_address')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
+            $table->string('location')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('relationship_status')->nullable();
+            $table->string('pronouns')->nullable();
 
             // Project-specific fields
             $table->string('state');
