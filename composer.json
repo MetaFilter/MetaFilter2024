@@ -37,6 +37,7 @@
         "laravel/telescope": "^5.2",
         "laravel/tinker": "^2.9",
         "league/csv": "^9.16",
+        "maatwebsite/excel": "^3.1",
         "maize-tech/laravel-markable": "^2.3",
         "matt-daneshvar/laravel-survey": "^0.5.0",
         "mews/purifier": "^3.4",
