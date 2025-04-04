@@ -38,14 +38,14 @@ final class DatabaseSeeder extends Seeder
     {
         $this->call([
             FakeBannerLinkSeeder::class,
-            FakeTagSeeder::class,
-            FakeUserSeeder::class,
+            //            FakeTagSeeder::class,
+            //            FakeUserSeeder::class,
 
             // Needs FakeTagSeeder and FakeUserSeeder
-            FakePostSeeder::class,
+            //            FakePostSeeder::class,
 
-            FakeFavoriteSeeder::class,
-            FakeFlagSeeder::class,
+            //            FakeFavoriteSeeder::class,
+            //            FakeFlagSeeder::class,
         ]);
     }
 
