@@ -28,33 +28,46 @@ use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @property int $id
- * @property bool $agrees_to_terms
+ * @property int $legacy_id
  * @property string $name
  * @property string $username
- * @property string $password
- * @property string $salt
- * @property string $hashed_password
- * @property string $homepage_url
- * @property int $legacy_id
- * @property string $email
- * @property bool $show_email
- * @property bool $use_mefi_mail
+ * @property string $birthdate
+ * @property bool $birthdate_year_only
+ * @property string $gender
+ * @property string $relationship_status
+ * @property string $pronouns
  * @property string $blurb
  * @property string $blurb_max
+ *
+ * @property string $salt
+ * @property string $password
+ * @property string $hashed_password
+ *
+ * @property string $email
+ * @property string $email_verified_at
+ * @property bool $show_email
+ * @property bool $use_mefi_mail
+ * @property string $paypal_email
+ *
+ * @property string $homepage_url
  * @property string $ip_address
  * @property string $latitude
  * @property string $longitude
  * @property string $location
- * @property string $gender
- * @property string $relationship_status
- * @property string $pronouns
+ * @property string $nearby
+ * @property string $regional
+ *
+ * @property bool $agrees_to_terms
  * @property bool $is_admin
- * @property string $email_verified_at
+ * @property bool $is_banned
+ * @property bool $show_donate
+ * @property bool $show_share_links
+ *
+ * @property string $user_state
  * @property string $remember_token
  * @property string $created_at
  * @property string $updated_at
  * @property string $deleted_at
- * @property string $state
  *
  * @mixin Builder
  */
@@ -79,28 +92,41 @@ final class User extends Authenticatable implements
     // Properties
 
     protected $fillable = [
-        'agrees_to_terms',
+        'id',
+        'legacy_id',
         'name',
         'username',
-        'password',
+        'birthdate',
+        'birthdate_year_only',
+        'gender',
+        'pronouns',
+        'relationship_status',
+
         'salt',
         'hashed_password',
-        'homepage_url',
-        'legacy_id',
+
         'email',
+        'email_verified_at',
         'show_email',
         'use_mefi_mail',
-        'blurb',
-        'blurb_max',
+        'paypal_email',
+
+        'homepage_url',
         'ip_address',
         'latitude',
         'longitude',
         'location',
-        'gender',
-        'relationship_status',
-        'pronouns',
+        'nearby',
+        'regional',
+        'show_coordinates',
+
+        'agrees_to_terms',
         'is_admin',
-        'state',
+        'is_banned',
+        'show_donate',
+        'show_share_links',
+
+        'user_state',
     ];
 
     protected $hidden = [
