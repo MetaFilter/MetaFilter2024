@@ -9,41 +9,50 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('users', callback: function (Blueprint $table) {
             $table->id();
 
-            // MetaFilter-specific fields
-            $table->string('username')->unique();
-            $table->string('salt')->unique();
-            $table->string('hashed_password')->unique();
-
-            // Default Laravel fields
-            $table->string('name')->nullable();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-
-            // MetaFilter-specific fields
-            $table->string('homepage_url')->nullable();
-            $table->boolean('agrees_to_terms')->nullable();
-            $table->boolean('is_admin')->nullable();
-            $table->boolean('show_email')->nullable();
-            $table->boolean('use_mefi_mail')->nullable();
             $table->integer('legacy_id')->nullable()->unique();
+            $table->string('name')->nullable();
+            $table->string('username')->unique();
+            $table->date('birthdate')->nullable();
+            $table->boolean('birthdate_year_only')->default(true);
+            $table->string('gender')->nullable();
+            $table->string('pronouns')->nullable();
+            $table->string('relationship_status')->nullable();
             $table->longText('blurb')->nullable();
             $table->longText('blurb_max')->nullable();
+
+            $table->string('salt')->unique();
+            $table->string('password');
+            $table->string('hashed_password')->unique();
+
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->boolean('show_email')->default(false);
+            $table->boolean('use_mefi_mail')->default(false);
+            $table->string('paypal_email')->nullable();
+
+            $table->string('homepage_url')->nullable();
             $table->string('ip_address')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
             $table->string('location')->nullable();
-            $table->string('gender')->nullable();
-            $table->string('relationship_status')->nullable();
-            $table->string('pronouns')->nullable();
+            $table->integer('nearby')->nullable();
+            $table->integer('regional')->nullable();
+            $table->boolean('show_coordinates')->default(false);
+
+            $table->boolean('agrees_to_terms')->default(false);
+            $table->boolean('is_admin')->default(false);
+            $table->boolean('is_banned')->default(false);
+            $table->boolean('show_donate')->default(false);
+            $table->boolean('show_share_links')->default(false);
 
             // Project-specific fields
-            $table->string('state');
+            $table->string('user_state');
 
+            // Laravel fields
+            $table->rememberToken();
             $table->nullableTimestamps();
             $table->softDeletes();
         });
