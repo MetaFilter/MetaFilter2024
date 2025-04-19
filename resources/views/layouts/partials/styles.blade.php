@@ -18,11 +18,11 @@
 @endif
 
 @vite('resources/sass/app.scss')
-
+{{--
 @if ($subsiteHasTheme && $subdomain !== 'www')
     @vite("resources/sass/themes/$subdomain.scss")
 @else
     @vite('resources/sass/themes/metafilter.scss')
 @endif
-
+--}}
 @stack('styles')
