@@ -12,7 +12,14 @@ return new class extends Migration {
         Schema::create('users', callback: function (Blueprint $table) {
             $table->id();
 
+            // MetaFilter-specific fields
             $table->integer('legacy_id')->nullable()->unique();
+            $table->string('username')->nullable()->unique();
+            $table->string('salt');
+            $table->string('hashed_password');
+            $table->string('state');
+
+            // Default Laravel fields
             $table->string('name')->nullable();
             $table->string('username')->unique();
             $table->date('birthdate')->nullable();
@@ -29,7 +36,7 @@ return new class extends Migration {
 
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->boolean('show_email')->default(false);
+            $table->string('password')->nullable();
             $table->boolean('use_mefi_mail')->default(false);
             $table->string('paypal_email')->nullable();
 
@@ -53,6 +60,7 @@ return new class extends Migration {
 
             // Laravel fields
             $table->rememberToken();
+
             $table->nullableTimestamps();
             $table->softDeletes();
         });

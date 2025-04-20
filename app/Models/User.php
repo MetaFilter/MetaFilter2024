@@ -29,7 +29,6 @@ use Spatie\Permission\Traits\HasRoles;
 /**
  * @property int $id
  * @property int $legacy_id
- * @property string $name
  * @property string $username
  * @property string $birthdate
  * @property bool $birthdate_year_only
@@ -42,12 +41,12 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $salt
  * @property string $password
  * @property string $hashed_password
- *
+ * @property string $state
+ * @property string $name
+ * @property string $homepage_url
  * @property string $email
  * @property string $email_verified_at
  * @property bool $show_email
- * @property bool $use_mefi_mail
- * @property string $paypal_email
  *
  * @property string $homepage_url
  * @property string $ip_address
@@ -94,7 +93,6 @@ final class User extends Authenticatable implements
     protected $fillable = [
         'id',
         'legacy_id',
-        'name',
         'username',
         'birthdate',
         'birthdate_year_only',
@@ -104,29 +102,12 @@ final class User extends Authenticatable implements
 
         'salt',
         'hashed_password',
+        'state',
+        'name',
 
         'email',
         'email_verified_at',
         'show_email',
-        'use_mefi_mail',
-        'paypal_email',
-
-        'homepage_url',
-        'ip_address',
-        'latitude',
-        'longitude',
-        'location',
-        'nearby',
-        'regional',
-        'show_coordinates',
-
-        'agrees_to_terms',
-        'is_admin',
-        'is_banned',
-        'show_donate',
-        'show_share_links',
-
-        'user_state',
     ];
 
     protected $hidden = [
@@ -152,11 +133,6 @@ final class User extends Authenticatable implements
         ];
     }
 
-    public function canAccessPanel(Panel $panel): bool
-    {
-        return $this->is_admin;
-    }
-
     public function toSearchableArray(): array
     {
         return ['id' => (string) $this->id] + $this->toArray();
@@ -176,13 +152,13 @@ final class User extends Authenticatable implements
         return $this->hasMany(Comment::class);
     }
 
-    public function passkeys(): HasMany
-    {
-        return $this->hasMany(Passkey::class);
-    }
-
     public function getFilamentName(): string
     {
         return $this->username;
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return false;
     }
 }

@@ -54,15 +54,4 @@ final class AppServiceProvider extends ServiceProvider
             'tagline' => $subsite->tagline ?? null,
         ]);
     }
-
-    private function getSubsiteRoute(string $subdomain): string
-    {
-        return match ($subdomain) {
-            'chat' => 'chat.home.index',
-            'labs' => 'labs.home.index',
-            'mall' => 'mall.home.index',
-            'www' => 'metafilter.posts.index',
-            default => "$subdomain.posts.index",
-        };
-    }
 }

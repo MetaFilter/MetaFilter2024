@@ -18,7 +18,12 @@ toggleTheme();
 
 document.addEventListener('click', event => {
     let eventTarget = event.target;
-
+/*
+    if (event.key === 'Escape'){
+        //do something here
+        Livewire.dispatch('escape-key-clicked');
+    }
+*/
     if (!eventTarget.closest('.global-navigation-menu')) {
 //        closeDropdown('global-navigation-dropdown-toggle');
     }
@@ -33,7 +38,8 @@ document.addEventListener('livewire:init', () => {
 });
 
 /*
-
+function keyPress (e)(){
+document.addEventListener("keyup", keyPress);
     <script>
         document.onkeydown = function(event) {
             if (event.key === 'Escape') {

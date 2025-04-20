@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Traits;
 
 use App\Models\Subsite;
+use Illuminate\Support\Facades\Schema;
 
 trait SubsiteTrait
 {
@@ -87,15 +88,30 @@ trait SubsiteTrait
         ) {
             $subdomain = 'www';
         }
+        \Log::info('Subdomain: ' . $subdomain);
+        if (Schema::hasTable('subsites')) {
+            return (new Subsite())->where(column: 'subdomain', operator: '=', value: $subdomain)->first();
+        }
 
-        return (new Subsite())->where(column: 'subdomain', operator: '=', value: $subdomain)->first();
+        return new Subsite();
     }
 
-    public function getSubsiteId()
+    public function getSubsiteId(): int
     {
         $subdomain = $this->getSubdomain();
 
         return Subsite::where(column: 'subdomain', operator: '=', value: $subdomain)->value('id');
+    }
+
+    public function getSubsiteRoute(string $subdomain): string
+    {
+        return match ($subdomain) {
+            'chat' => 'chat.home.index',
+            'labs' => 'labs.home.index',
+            'mall' => 'mall.home.index',
+            'www' => 'metafilter.posts.index',
+            default => "$subdomain.posts.index",
+        };
     }
 
     public function getStylesheetName(): string

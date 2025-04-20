@@ -24,6 +24,12 @@ final class UserImportService
     public function import(): void
     {
         $this->prepareDatabaseForImport();
+            model: new User(),
+            filePath: 'app/test,csv',
+            columns: self::COLUMNS,
+            columnLabel: 'date_of_birth',
+            columnValue: "STR_TO_DATE(@date_of_birth, '%c/%d/%Y')",
+        );
 
         DB::table('users')->truncate();
 
