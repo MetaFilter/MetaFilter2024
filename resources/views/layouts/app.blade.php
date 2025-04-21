@@ -39,28 +39,30 @@
     @endif
 </header>
 
-<div class="container main-contents-wrapper">
+<section class="container">
     <!-- He's the DJ; I'm the wrapper -->
-    <x-buttons.top-bottom-button-component location="top" />
+    <div class="columns">
+        <main class="column is-two-thirds" id="main-contents">
+            <x-buttons.top-bottom-button-component location="top" />
 
-    <main class="main-contents" id="main-contents">
-        @if (isset($showTitle) && $showTitle === true)
-            <h1>{{ $title }}</h1>
-        @endif
+            @if (isset($showTitle) && $showTitle === true)
+                <h1>{{ $title }}</h1>
+            @endif
 
-        @include('layouts.partials.flash-messages')
+            @include('layouts.partials.flash-messages')
 
-        @yield('contents')
-    </main>
+            @yield('contents')
+        </main>
 
-    <aside class="main-sidebar">
-        @include('layouts.partials.main-sidebar')
-    </aside>
+        <aside class="column main-sidebar">
+            @include('layouts.partials.main-sidebar')
+        </aside>
 
-    <x-buttons.top-bottom-button-component location="bottom" />
-</div>
+        <x-buttons.top-bottom-button-component location="bottom" />
+    </div>
+</section>
 
-<footer class="site-footer" id="site-footer">
+<footer class="footer site-footer" id="site-footer">
     @include('layouts.partials.global-footer')
     @include('layouts.partials.fine-print')
 </footer>

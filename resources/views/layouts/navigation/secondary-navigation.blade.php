@@ -1,5 +1,7 @@
 @if ($secondaryNavigation)
-    <nav class="secondary-navigation container" id="secondary-navigation">
-        {!! $secondaryNavigation !!}
+    <nav class="navbar secondary-navigation" aria-label="secondary navigation">
+        <div class="container">
+            {!! $secondaryNavigation !!}
+        </div>
     </nav>
 @endif
