@@ -24,7 +24,6 @@ final class StoreEmailAddressRequest extends BaseFormRequest
             'email' => [
                 'required',
                 'string',
-                'lowercase',
                 'email',
                 'max:255',
                 Rule::unique(User::class),
