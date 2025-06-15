@@ -72,6 +72,11 @@ final class Post extends BaseModel implements CanPresent, HasMedia
         'published_at',
         'is_published',
         'state',
+        'slug',
+        'uuid',
+        'is_current',
+        'publisher_type',
+        'publisher_id',
     ];
 
     protected static array $marks = [
