@@ -107,6 +107,7 @@ trait SubsiteTrait
     {
         return match ($subdomain) {
             'chat' => 'chat.home.index',
+            'faq' => 'faq.index',
             'labs' => 'labs.home.index',
             'mall' => 'mall.home.index',
             'www' => 'metafilter.posts.index',

@@ -7,6 +7,7 @@ use App\Http\Controllers\FaqController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(FaqController::class)->group(function () {
-    Route::get('', 'index')
-        ->name(RouteNameEnum::FaqIndex);
+    Route::get('', function () {
+        return redirect('https://metafilter.com/faq.mefi');
+    })->name(RouteNameEnum::FaqIndex);
 });
