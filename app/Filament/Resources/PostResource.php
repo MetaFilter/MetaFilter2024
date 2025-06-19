@@ -19,7 +19,9 @@ use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 final class PostResource extends Resource
 {
@@ -37,7 +39,8 @@ final class PostResource extends Resource
                     ->maxLength(self::INPUT_MAX_LENGTH),
                 TextInput::make('slug')
                     ->required()
-                    ->maxLength(self::INPUT_MAX_LENGTH),
+                    ->maxLength(self::INPUT_MAX_LENGTH)
+                    ->unique(Post::class, 'slug', ignoreRecord: true),
                 TextInput::make('legacy_id')
                     ->numeric(),
                 Textarea::make('body')
@@ -53,6 +56,8 @@ final class PostResource extends Resource
                     ->required(),
                 Select::make('user_id')
                     ->relationship('user', 'name')
+                    ->searchable()
+                    ->preload()
                     ->required(),
                 TextInput::make('uuid')
                     ->label('UUID')
@@ -69,18 +74,44 @@ final class PostResource extends Resource
             ]);
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withDrafts();
+    }
+
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
                 TextColumn::make('title')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable()
+                    ->limit(50),
+                TextColumn::make('slug')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                IconColumn::make('is_published')
+                    ->boolean()
+                    ->label('Published')
+                    ->sortable(),
+                TextColumn::make('state')
+                    ->badge()
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('subsite.name')
-                    ->numeric()
+                    ->label('Subsite')
                     ->sortable(),
                 TextColumn::make('user.name')
-                    ->numeric()
+                    ->label('Author')
                     ->sortable(),
+                TextColumn::make('published_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
