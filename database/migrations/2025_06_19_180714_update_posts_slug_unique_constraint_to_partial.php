@@ -7,8 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
         Schema::table('posts', function (Blueprint $table) {
@@ -24,7 +23,7 @@ return new class extends Migration
     {
         // Drop the functional unique index
         DB::statement('DROP INDEX posts_slug_published_unique ON posts');
-        
+
         Schema::table('posts', function (Blueprint $table) {
             // Restore the original unique constraint
             $table->unique('slug');

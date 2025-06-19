@@ -22,7 +22,7 @@ final class Snippet extends BaseModel
     // Properties
 
     protected $fillable = [
-        // Should it be possible to target a specific subsite?
+        // TODO: Should it be possible to target a specific subsite?
         'title',
         'body',
     ];

@@ -21,6 +21,7 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Table;
+use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 
 final class PostResource extends Resource
@@ -114,7 +115,10 @@ final class PostResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Filter::make('hide_drafts')
+                    ->label('Hide drafts')
+                    ->baseQuery(fn(Builder $query): Builder => $query->withoutDrafts())
+                    ->default(true),
             ])
             ->actions([
                 EditAction::make(),
