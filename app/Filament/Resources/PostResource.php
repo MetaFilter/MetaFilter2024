@@ -22,6 +22,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Table;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 
 final class PostResource extends Resource
@@ -42,16 +43,11 @@ final class PostResource extends Resource
                     ->required()
                     ->maxLength(self::INPUT_MAX_LENGTH)
                     ->unique(Post::class, 'slug', ignoreRecord: true),
-                TextInput::make('legacy_id')
-                    ->numeric(),
                 Textarea::make('body')
                     ->required()
                     ->columnSpanFull(),
                 Textarea::make('more_inside')
                     ->columnSpanFull(),
-                TextInput::make('state')
-                    ->required()
-                    ->maxLength(self::INPUT_MAX_LENGTH),
                 Select::make('subsite_id')
                     ->relationship('subsite', 'name')
                     ->required(),
@@ -60,24 +56,13 @@ final class PostResource extends Resource
                     ->searchable()
                     ->preload()
                     ->required(),
-                TextInput::make('uuid')
-                    ->label('UUID')
-                    ->maxLength(36),
                 DateTimePicker::make('published_at'),
-                Toggle::make('is_published')
-                    ->required(),
-                Toggle::make('is_current')
-                    ->required(),
-                TextInput::make('publisher_type')
-                    ->maxLength(self::INPUT_MAX_LENGTH),
-                TextInput::make('publisher_id')
-                    ->numeric(),
             ]);
     }
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->withDrafts();
+        return Post::current();
     }
 
     public static function table(Table $table): Table
@@ -95,15 +80,12 @@ final class PostResource extends Resource
                     ->boolean()
                     ->label('Published')
                     ->sortable(),
-                TextColumn::make('state')
-                    ->badge()
-                    ->searchable()
-                    ->sortable(),
                 TextColumn::make('subsite.name')
                     ->label('Subsite')
                     ->sortable(),
                 TextColumn::make('user.name')
                     ->label('Author')
+                    ->searchable()
                     ->sortable(),
                 TextColumn::make('published_at')
                     ->dateTime()
@@ -118,7 +100,11 @@ final class PostResource extends Resource
                 Filter::make('hide_drafts')
                     ->label('Hide drafts')
                     ->baseQuery(fn(Builder $query): Builder => $query->withoutDrafts())
-                    ->default(true),
+                    ->default(false),
+                SelectFilter::make('subsite_id')
+                    ->relationship('subsite', 'name')
+                    ->searchable()
+                    ->preload(),
             ])
             ->actions([
                 EditAction::make(),

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\PostStateEnum;
 use App\Presenters\PostPresenter;
 use Coderflex\LaravelPresenter\Concerns\CanPresent;
 use Coderflex\LaravelPresenter\Concerns\UsesPresenters;
@@ -71,9 +72,7 @@ final class Post extends BaseModel implements CanPresent, HasMedia
         'user_id',
         'published_at',
         'is_published',
-        'state',
         'slug',
-        'uuid',
         'is_current',
         'publisher_type',
         'publisher_id',
@@ -88,6 +87,18 @@ final class Post extends BaseModel implements CanPresent, HasMedia
     protected array $presenters = [
         'default' => PostPresenter::class,
     ];
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function (Post $post) {
+            // Set default state if not provided
+            if (empty($post->state)) {
+                $post->state = PostStateEnum::Draft->value;
+            }
+        });
+    }
 
     public function toSearchableArray(): array
     {
