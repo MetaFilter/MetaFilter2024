@@ -20,7 +20,7 @@ final class EditPost extends EditRecord
             DeleteAction::make(),
             Action::make('publish')
             ->label('Publish')
-            ->visible(fn (Post $record) => $record->is_published === false)
+            ->visible(fn(Post $record) => $record->is_published === false)
             ->action(function (Post $record) {
                 $record->setLive();
                 $record->save();
@@ -30,7 +30,7 @@ final class EditPost extends EditRecord
             }),
             Action::make('unpublish')
             ->label('Unpublish')
-            ->visible(fn (Post $record) => $record->is_published === true)
+            ->visible(fn(Post $record) => $record->is_published === true)
             ->action(function (Post $record) {
                 $record->is_published = false;
                 $record->save();
