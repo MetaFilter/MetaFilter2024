@@ -6,8 +6,8 @@
 
                 @include('comments.partials.comment-footer', [
                     'comment' => $comment,
-                    'favoritesCount' => $comment->favorites()->count(),
-                    'flagsCount' => $comment->flags()->count(),
+                    'favoritesCount' => $comment->favoriteCount(),
+                    'flagsCount' => $comment->flagCount(),
                     'flagReasons' => $flagReasons,
                 ])
             </article>

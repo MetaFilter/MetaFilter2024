@@ -151,17 +151,17 @@ final class Post extends BaseModel implements CanPresent, HasMedia
         return $this->hasMany(Comment::class);
     }
 
-    public function bookmarks(): int
+    public function bookmarkCount(): int
     {
         return Bookmark::count($this);
     }
 
-    public function favorites(): int
+    public function favoriteCount(): int
     {
         return Favorite::count($this);
     }
 
-    public function flags(): int
+    public function flagCount(): int
     {
         return Flag::count($this);
     }
