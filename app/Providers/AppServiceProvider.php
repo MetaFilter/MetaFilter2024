@@ -34,7 +34,10 @@ final class AppServiceProvider extends ServiceProvider
         Model::shouldBeStrict();
 
         Relation::morphMap([
+            'admin_notes' => 'App\Models\AdminNote',
+            'comments' => 'App\Models\Comment',
             'posts' => 'App\Models\Post',
+            'snippets' => 'App\Models\Snippet',
             'users' => 'App\Models\User',
         ]);
 
