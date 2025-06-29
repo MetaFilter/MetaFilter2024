@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\PostStateEnum;
 use App\Presenters\PostPresenter;
 use Coderflex\LaravelPresenter\Concerns\CanPresent;
 use Coderflex\LaravelPresenter\Concerns\UsesPresenters;
@@ -71,7 +72,10 @@ final class Post extends BaseModel implements CanPresent, HasMedia
         'user_id',
         'published_at',
         'is_published',
-        'state',
+        'slug',
+        'is_current',
+        'publisher_type',
+        'publisher_id',
     ];
 
     protected static array $marks = [
@@ -82,6 +86,10 @@ final class Post extends BaseModel implements CanPresent, HasMedia
 
     protected array $presenters = [
         'default' => PostPresenter::class,
+    ];
+
+    protected $attributes = [
+        'state' => PostStateEnum::Draft->value,
     ];
 
     public function toSearchableArray(): array
@@ -135,17 +143,17 @@ final class Post extends BaseModel implements CanPresent, HasMedia
         return $this->hasMany(Comment::class);
     }
 
-    public function bookmarks(): int
+    public function bookmarkCount(): int
     {
         return Bookmark::count($this);
     }
 
-    public function favorites(): int
+    public function favoriteCount(): int
     {
         return Favorite::count($this);
     }
 
-    public function flags(): int
+    public function flagCount(): int
     {
         return Flag::count($this);
     }

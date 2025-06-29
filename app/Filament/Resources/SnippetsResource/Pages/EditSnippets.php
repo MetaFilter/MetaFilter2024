@@ -6,7 +6,7 @@ namespace App\Filament\Resources\SnippetsResource\Pages;
 
 use App\Filament\Resources\SnippetResource;
 use Filament\Resources\Pages\EditRecord;
-use Filament\Tables\Actions\DeleteAction;
+use Filament\Actions\DeleteAction;
 
 final class EditSnippets extends EditRecord
 {

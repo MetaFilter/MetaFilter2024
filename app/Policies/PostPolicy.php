@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Enums\RoleNameEnum;
 use App\Models\User;
 use App\Models\Post;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -19,7 +20,7 @@ final class PostPolicy
 
     public function view(User $user, Post $post): bool
     {
-        if ($user->hasRole(['admin']) || $post->user_id === $user->id) {
+        if ($user->hasRole([RoleNameEnum::MODERATOR->value]) || $post->user_id === $user->id) {
             return true;
         }
 
@@ -34,7 +35,7 @@ final class PostPolicy
 
     public function update(User $user, Post $post): bool
     {
-        if ($user->hasRole(['admin']) || $post->user_id === $user->id) {
+        if ($user->hasRole([RoleNameEnum::MODERATOR->value]) || $post->user_id === $user->id) {
             return true;
         }
 
