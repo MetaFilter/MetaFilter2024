@@ -23,6 +23,7 @@ use Filament\Tables\Table;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Validation\Rules\Unique;
 
 final class PostResource extends Resource
 {
@@ -41,7 +42,7 @@ final class PostResource extends Resource
                 TextInput::make('slug')
                     ->required()
                     ->maxLength(self::INPUT_MAX_LENGTH)
-                    ->unique(Post::class, 'slug', ignoreRecord: true),
+                    ->unique(Post::class, 'slug', ignoreRecord: true, modifyRuleUsing: fn(Unique $rule) => $rule->where('is_published', true)),
                 Textarea::make('body')
                     ->required()
                     ->columnSpanFull(),
