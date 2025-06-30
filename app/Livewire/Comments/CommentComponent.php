@@ -10,6 +10,7 @@ use App\Models\Flag;
 use App\Models\Post;
 use App\Models\User;
 use App\Traits\CommentComponentTrait;
+use App\Traits\SessionTimezoneTrait;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
@@ -18,6 +19,7 @@ use Livewire\Component;
 final class CommentComponent extends Component
 {
     use CommentComponentTrait;
+    use SessionTimezoneTrait;
 
     // Data
     public ?int $authorizedUserId;

@@ -7,6 +7,7 @@ namespace App\Livewire\Posts;
 use App\Models\Post;
 use App\Traits\PaginationTrait;
 use App\Traits\PostTrait;
+use App\Traits\SessionTimezoneTrait;
 use App\Traits\SubsiteTrait;
 use Illuminate\Contracts\Pagination\CursorPaginator;
 use Illuminate\Contracts\View\View;
@@ -19,6 +20,7 @@ final class PostIndexComponent extends Component
 {
     use PaginationTrait;
     use PostTrait;
+    use SessionTimezoneTrait;
     use SubsiteTrait;
     use WithPagination;
 
@@ -59,6 +61,7 @@ final class PostIndexComponent extends Component
 
         return view('livewire.posts.post-index-component', [
             'posts' => $posts,
+            'displayTimezone' => $this->getDisplayTimezone(),
         ]);
     }
 
@@ -72,7 +75,7 @@ final class PostIndexComponent extends Component
     private function getPosts(): CursorPaginator
     {
         $dateQueries = [
-            DB::raw('DATE_FORMAT(posts.created_at, "%m-%d") as month_day'),
+            DB::raw("DATE_FORMAT(CONVERT_TZ(posts.created_at, 'UTC', " . DB::connection()->getPdo()->quote($this->getDisplayTimezone()) . "), '%m-%d') as month_day"),
             DB::raw('COUNT(*) as total_posts'),
         ];
 
