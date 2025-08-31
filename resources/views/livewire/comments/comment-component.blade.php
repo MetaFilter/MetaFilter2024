@@ -3,6 +3,7 @@ use App\Enums\ModerationTypeEnum;
 @endphp
 
 <article class="comment @if ($isRemoved) moderator-removed @endif"
+    id="comment-{{ $commentId }}"
     data-comment-id="{{ $commentId }}"
     @if (!$isRemoved)
         data-member-id="{{ $comment->user->id }}"

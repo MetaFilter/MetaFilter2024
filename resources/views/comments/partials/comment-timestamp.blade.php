@@ -1,5 +1,5 @@
 <time datetime="{{ $comment->created_at->format('Y-m-d H:i:d') }}">
-    <a href="#{{ $comment->id }}" class="footer-info" title="{{ trans('Permanent link to this comment') }}">
+    <a href="#comment-{{ $comment->id }}" class="footer-info" title="{{ trans('Permanent link to this comment') }}">
         <x-icons.icon-component filename="clock" class="icon-small" />
         {{ $comment->created_at->format('g:i a') }}
     </a>
