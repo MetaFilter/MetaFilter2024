@@ -1,4 +1,4 @@
-<div class="moderator-message moderation-action {{ $moderationClass }}">
+<div class="moderator-message moderation-action {{ $moderationClass }}" id="comment-{{ $comment->id }}">
     <aside class="moderation-action">
         {{ trans($moderationAction) }}
     </aside>
