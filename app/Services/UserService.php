@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Repositories\UserRepositoryInterface;
 use App\Traits\LoggingTrait;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
+
 
 final class UserService
 {
@@ -40,5 +42,16 @@ final class UserService
     public function update(int $userId, array $data): ?User
     {
         return $this->userRepository->update($userId, $data);
+    }
+
+    public function getStaleUsers(): Collection
+    {
+        try {
+            return $this->userRepository->findStaleUsers();
+        } catch (Exception $exception) {
+            $this->logError($exception);
+
+            return collect();
+        }
     }
 }

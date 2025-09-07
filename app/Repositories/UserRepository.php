@@ -6,6 +6,10 @@ namespace App\Repositories;
 
 use App\Dtos\UserDto;
 use App\Models\User;
+use App\Enums\UserStateEnum;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+
 
 final class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -30,5 +34,15 @@ final class UserRepository extends BaseRepository implements UserRepositoryInter
         $user->state = $state;
 
         $user->save();
+    }
+
+    public function findStaleUsers(): Collection
+    {
+        return User::query()
+            ->where('state', UserStateEnum::Pending->value)
+            ->whereNull('email_verified_at')
+            ->whereNull('pm_type')
+            ->where('updated_at', '<', Carbon::now()->subHours(24))
+            ->get();
     }
 }
