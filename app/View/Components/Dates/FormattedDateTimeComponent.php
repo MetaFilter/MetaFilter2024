@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\View\Components\Dates;
 
+use App\Traits\SessionTimezoneTrait;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 final class FormattedDateTimeComponent extends Component
 {
+    use SessionTimezoneTrait;
+
     public Carbon $date;
     public string $format = 'Y-m-d H:i:s';
 
@@ -36,7 +39,8 @@ final class FormattedDateTimeComponent extends Component
 
     private function getFormattedDate(): string
     {
-        $formattedDate = $this->date->format($this->format());
+        $date = $this->date->tz($this->getDisplayTimezone());
+        $formattedDate = $date->format($this->format());
 
         return $this->addPeriods($formattedDate);
     }

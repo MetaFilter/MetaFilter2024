@@ -10,6 +10,7 @@ use App\Enums\ModerationTypeEnum;
 use App\Models\Comment;
 use App\Traits\AuthStatusTrait;
 use App\Traits\CommentComponentTrait;
+use App\Traits\SessionTimezoneTrait;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\On;
@@ -19,6 +20,7 @@ final class CommentComponent extends Component
 {
     use AuthStatusTrait;
     use CommentComponentTrait;
+    use SessionTimezoneTrait;
 
     // State
     public CommentStateEnum $state = CommentStateEnum::Viewing;

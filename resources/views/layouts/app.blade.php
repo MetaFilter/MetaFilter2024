@@ -21,6 +21,8 @@
     <meta name="ckeditor-config" content='@json(config("ckeditor"))'>
 @endif
 
+    <livewire:localization.switch-timezone-component />
+
 </head>
 <body>
 

@@ -14,6 +14,7 @@ use App\Repositories\PostRepositoryInterface;
 use App\Services\LdJsonService;
 use App\Services\PostService;
 use App\Traits\PostTrait;
+use App\Traits\SessionTimezoneTrait;
 use App\Traits\SubsiteTrait;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -21,6 +22,7 @@ use Illuminate\Http\RedirectResponse;
 final class PostController extends BaseController
 {
     use PostTrait;
+    use SessionTimezoneTrait;
     use SubsiteTrait;
 
     protected int $subsiteId;
@@ -66,6 +68,7 @@ final class PostController extends BaseController
             'next' => $post->next(),
             'previous' => $post->previous(),
             'canonicalUrl' => $this->getCanonicalUrl($post),
+            'displayTimezone' => $this->getDisplayTimezone(),
             'relatedPosts' => $relatedPosts,
             'subdomain' => $subdomain,
             'useLivewire' => true,
